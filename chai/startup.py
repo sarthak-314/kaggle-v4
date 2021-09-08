@@ -4,7 +4,8 @@ from sklearn.manifold import trustworthiness
 sys.path.append('/kaggle/working/temp')
 sys.path.append('/content/temp')
 
-from kutils.startup import * 
+from kutils.startup import *
+from kutils.base import * 
 from chai.working_hf_data import *
 from chai.data.comp import *
 from chai.data.qa_datasets import *
