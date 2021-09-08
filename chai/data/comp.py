@@ -51,7 +51,7 @@ def build_goldp(df):
             if row.answer_text in line: 
                 if row.id in gold['id']:
                     continue
-                gold['gold_s'].append(line)
+                gold['goldp'].append(line)
                 gold['id'].append(row.id)
 
     gold = pd.DataFrame(gold)

@@ -6,6 +6,8 @@ sys.path.append('/content/temp')
 
 from kutils.startup import * 
 from chai.working_hf_data import *
+from chai.data.comp import *
+from chai.data.qa_datasets import *
 
 # Competition Specific Constants
 COMP_NAME = 'chaii-hindi-and-tamil-question-answering'
