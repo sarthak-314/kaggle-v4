@@ -1,3 +1,4 @@
+
 from datasets import concatenate_datasets 
 import datasets
 
@@ -95,3 +96,63 @@ def fix_answer_start(df):
         return row.context.find(row.answer_text)
     df['answer_start'] = df.apply(func, axis=1)
     return df
+
+
+def load_mlqa_hi_en(): 
+    MLQA_HI_AND_EN = ['mlqa.hi.hi', 'mlqa.hi.en', 'mlqa.en.hi']
+    mlqa_hi_and_en = concatenate_datasets([load_splits('mlqa', config, verbose=False) for config in MLQA_HI_AND_EN])
+    print_dataset_info(mlqa_hi_and_en, 'MLQA Hindi & English both')
+    return mlqa_hi_and_en
+
+def load_mlqa_hi_full(): 
+    MLQA_HI_FULL = [
+        'mlqa.ar.hi', 'mlqa.vi.hi',  'mlqa.zh.hi', 'mlqa.es.hi', 
+        'mlqa.hi.ar', 'mlqa.hi.de', 'mlqa.hi.vi', 'mlqa.hi.zh', 'mlqa.hi.es', 
+        'mlqa.en.ar', 'mlqa.en.en',
+        'mlqa.hi.hi', 'mlqa.hi.en', 'mlqa.en.hi', 
+    ]
+    mlqa_hi_full_dataset = concatenate_datasets([load_splits('mlqa', config, verbose=False) for config in MLQA_HI_FULL])
+    print_dataset_info(mlqa_hi_full_dataset, 'MLQA Full Hindi')
+    return mlqa_hi_full_dataset
+
+def load_mlqa_hi_translated(): 
+    return concatenate_datasets([
+        load_splits('mlqa', 'mlqa-translate-train.hi'), 
+        load_splits('mlqa', 'mlqa-translate-test.hi'), 
+    ])
+
+def load_xquad(): 
+    """
+    1190 hindi + 1190 english pairs
+    """
+    xquad_dataset = concatenate_datasets([
+        load_splits('xquad', 'xquad.hi', verbose=False),
+        load_splits('xquad', 'xquad.hi', verbose=False),
+        load_splits('xquad', 'xquad.en', verbose=False), 
+    ])
+    print_dataset_info(xquad_dataset, 'XQUAD')
+    return xquad_dataset
+
+def load_tydiqa_goldp(): 
+    """
+    Second task has 50k examples
+    """
+    return load_splits('tydiqa', 'secondary_task')
+
+def load_squad_v2(): 
+    """
+    80k answerable + 50k unanswerable questions
+    - Good for zero shot training with long contexts
+    """
+    return load_splits('squad_v2')
+
+
+
+DATASET_TO_FUNC = {
+    'squad_v2': load_squad_v2,
+    'mlqa_hi_full': load_mlqa_hi_full,
+    'tydiqa_goldp': load_tydiqa_goldp,
+    'mlqa_hi_translated': load_mlqa_hi_translated,
+    'mlqa_hi_en': load_mlqa_hi_en,
+    'xquad': load_xquad,
+}

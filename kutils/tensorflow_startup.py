@@ -127,19 +127,20 @@ def early_stop(patience=3, kwargs=COMMON_KWARGS):
         **kwargs,
     )
 
-def reduce_lr_on_plateau(patience): 
+def reduce_lr_on_plateau(patience, kwargs=COMMON_KWARGS): 
     return tf.keras.callbacks.ReduceLROnPlateau(
         factor=0.2,
         patience=patience,
         min_delta=0.0001,
         min_lr=0,
-        **KWARGS, 
+        **kwargs, 
     )
 
-def time_stopping(max_train_hours):
+def time_stop(max_train_hours):
     import tensorflow_addons as tfa 
     return tfa.callbacks.TimeStopping(
-        seconds=max_train_hours*3600
+        seconds=max_train_hours*3600, 
+        verbose=1, 
     )
     
 def tqdm_bar(): 

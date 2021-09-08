@@ -11,6 +11,7 @@ from datasets import (
 )
 
 from chai.huggingface_qa_utils import *
+from chai.data.qa_datasets import *
 from termcolor import colored
 
 class ChaiQAModelA(TFAutoModelForQuestionAnswering): 
