@@ -14,7 +14,7 @@ from chai.huggingface_qa_utils import *
 from chai.data.qa_datasets import *
 from termcolor import colored
 
-class ChaiQAModelA(TFAutoModelForQuestionAnswering): 
+class ChaiQAModel(TFAutoModelForQuestionAnswering): 
     def compute_loss(self, labels, logits):
         loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(
             from_logits=True, reduction=tf.keras.losses.Reduction.NONE
