@@ -31,14 +31,14 @@ def remove_multi_answer_sentences(df):
         cleaned_dict['context_pruned'].append(context)
         cleaned_dict['id'].append(row.id)
     x = pd.DataFrame(cleaned_dict)
-    df = x.merge(df)
+    df = df.merge(x)
     df['context'] = df['context_pruned']
     df = fix_start(df)
     return df
 
 def add_word_len_tokens_to_df(df, word_lens=WORD_LENS, hindi_split='।', tamil_split='.'): 
     hindi = add_word_len_tokens(df[df.language=='hindi'], word_lens, hindi_split) # ।
-    tamil = add_word_len_tokens(df[df.language=='hindi'], word_lens, tamil_split) # .
+    tamil = add_word_len_tokens(df[df.language=='tamil'], word_lens, tamil_split) # .
     df = pd.concat([hindi, tamil]).sample(frac=1.)
     df = fix_start(df)
     return df
